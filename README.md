@@ -1,6 +1,73 @@
 # 22-Use-Microsoft-Purview-with-Azure-Synapse-Analytics
 Microsoft Purview enables you to catalog data assets across your data estate and track the flow of data as it is transferred from one data source to another - a key element of a comprehensive data governance solution.
 
+
+This lab demonstrates how to use **Microsoft Purview** to catalog and track data lineage in **Azure Synapse Analytics**. You will register data sources, scan and explore metadata, track lineage, and execute a pipeline that moves data from Azure Data Lake to a Synapse dedicated SQL pool.
+
+---
+
+## 🔹 Steps
+
+### 1. Create a Microsoft Purview Account
+- In the Azure Portal, create a new **Microsoft Purview account**.
+
+### 2. Launch Purview Studio
+- Navigate to your Purview account and open **Purview Studio**.
+
+### 3. Register Data Sources
+- Register your **Azure Synapse Analytics Workspace** and other relevant data sources.
+- Ensure appropriate permissions are granted (e.g., **Managed Identity**).
+
+### 4. Start a Scan
+- Create and start a **scan** on the registered data sources.
+- This process catalogs data assets like tables and databases.
+
+### 5. Browse the Data Catalog
+- After the scan is complete, explore the discovered assets within the **Data Map**.
+
+### 6. View Lineage (Data Flow Tracking)
+- Use the **Lineage** feature to track data movements within Azure Synapse Analytics.
+- View how data flows from sources to destinations.
+
+### 7. Access Catalog from Synapse Studio
+- In **Synapse Studio**, connect to the Purview catalog.
+- Search and query data assets directly from Synapse.
+
+---
+
+## 🔁 Additional Steps - Data Movement and Lineage Tracking
+
+### 8. Create and Run a Pipeline
+- In Synapse Studio, go to **Integrate > + > Copy Data Tool**.
+- **Source**: Select the `products.csv` file from the Data Lake.
+- **Destination**: Choose the `dbo.products` table in the dedicated SQL pool.
+- Configure the format settings:
+  - File format: `DelimitedText`
+  - Column delimiter: `Comma (,)`
+  - Row delimiter: `Line feed (\n)`
+  - First row as header: ✔️
+- Name the task `Load_Product_Data` and use the **Bulk insert** method.
+- Deploy and run the pipeline. Wait for the run to succeed.
+
+### 9. Track Lineage in Microsoft Purview
+- In Purview Studio, navigate to your collection.
+- Filter assets to display **Data pipelines**, **Files**, and **Tables**.
+- Select the `Copy_xxx` asset and view the **Lineage** tab.
+- Observe data flow from `products.csv` to the `products` table.
+- Use "Switch to asset" links to view details of each asset in the lineage.
+
+### 10. Pause Resources and Clean Up
+- In Synapse Studio, go to **Manage > SQL Pools** and pause your SQL pool.
+- In the Azure Portal, navigate to **Resource Groups**.
+- Select your lab resource group (e.g., `dp203-xxxxxxx`) and delete it to avoid unnecessary costs.
+
+---
+
+✅ **Tip**: You can view Purview catalog assets and lineage directly from Synapse Studio using the built-in search integration.
+
+---
+
+
 ## Screenshots
 ![lab22](https://github.com/user-attachments/assets/592aced5-b5c0-44e3-96db-6a7477099372)
 ![lab22row100](https://github.com/user-attachments/assets/e612b9df-c8fe-47c8-98a0-5c58a1b59e8f)
